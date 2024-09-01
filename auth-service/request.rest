@@ -1,0 +1,2 @@
+curl -X POST http://localhost:8000/api/auth/login -d 'email=mouhssine@gmail.com&password=123456'
+
