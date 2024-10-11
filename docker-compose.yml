@@ -1,0 +1,46 @@
+version: "3.8"
+
+services:
+    jwt-auth-service:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        container_name: jwt-auth-service
+        restart: unless-stopped
+        environment:
+            - APP_ENV=local
+            - APP_DEBUG=true
+            - APP_KEY=base64:0eq4Dnv1blDHCVnQPYuzHQ13dY9j9tQHYvrDLr12834=
+            - DB_CONNECTION=mysql
+            - DB_HOST=mysql
+            - DB_PORT=3306
+            - DB_DATABASE=jwt-auth
+            - DB_USERNAME=root
+            - DB_PASSWORD=
+        networks:
+            - app-network
+        volumes:
+            - .:/var/www
+        ports:
+            - "8000:9000"
+
+    mysql:
+        image: mysql:8.0
+        container_name: mysql
+        restart: unless-stopped
+        environment:
+            MYSQL_DATABASE: jwt-auth
+            MYSQL_USER: root
+            MYSQL_PASSWORD:
+            MYSQL_ROOT_PASSWORD:
+        volumes:
+            - mysql_data:/var/lib/mysql
+        networks:
+            - app-network
+
+networks:
+    app-network:
+        driver: bridge
+
+volumes:
+    mysql_data:
