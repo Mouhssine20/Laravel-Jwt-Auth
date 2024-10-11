@@ -25,3 +25,7 @@ Route::post('auth/register', [AuthController::class, 'register']);
 Route::post('auth/login', [AuthController::class, 'login']);
 
 Route::middleware('auth:api')->get('user', [AuthController::class, 'getUser']);
+
+Route::get('auth/test', function() {
+    return response('This is a test response');
+});
